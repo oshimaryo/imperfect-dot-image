@@ -1,0 +1,88 @@
+<!--
+ * 2025/11/17
+ * ランダムな色のグリッドを表示
+ * rect 3.5px 
+ * 56px x 56px
+
+ * 32inchで見る限り、崩れている部分が見えにくくてあまりよくない
+ -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Color Grid</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #222;
+      }
+
+      #wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        width: 56px;
+        height: 56px;
+      }
+
+      .pixel {
+        width: 3.5px;
+        height: 3.5px;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper"></div>
+
+    <script>
+      const wrapper = document.getElementById("wrapper");
+      const wrapperWidth = 56;
+      const wrapperHeight = 56;
+      const pixelSize = 3.5;
+
+      // wrapper内に表示するdivの数を計算
+      const cols = Math.ceil(wrapperWidth / pixelSize);
+      const rows = Math.ceil(wrapperHeight / pixelSize);
+      const totalPixels = cols * rows;
+
+      // ランダムな色を生成する関数
+      function getRandomColor() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r}, ${g}, ${b})`;
+      }
+
+      // ランダムにR、G、Bのいずれか一色だけを生成する関数
+      function getRandomRGBColor() {
+        const r = Math.random()
+        const v = Math.random() * 255
+        if(r  < 1/3) {
+          return `rgb(${v}, 0, 0)`; // 1/3の確率でrを返す
+        } else if (r < 2/3) {
+          return `rgb(0, ${v}, 0)`; // 1/3の確率でgを返す
+        } else {
+          return `rgb(0, 0, ${v})`; // 1/3の確率でbを返す
+        }
+      }
+
+      //  ピクセルを生成してラッパーに追加
+      for (let i = 0; i < totalPixels; i++) {
+        const pixel = document.createElement("div");
+        pixel.className = "pixel";
+        pixel.style.backgroundColor = getRandomColor();
+        wrapper.appendChild(pixel);
+      }
+    </script>
+  </body>
+</html>
